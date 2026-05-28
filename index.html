@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>異現実収容研究所</title>
+    <link rel="stylesheet" href="css/top.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Zen+Kaku+Gothic+New:wght@300;400;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- POPUP -->
+<div id="welcomePopup" class="popup-overlay">
+    <div class="popup-content">
+        <p>INCOMING TRANSMISSION — CLASSIFIED</p>
+        <p>ある日、貴方のもとへ一通のメールが届いた。</p>
+        <p>「測定員採用のお知らせ」</p>
+        <p>これは貴方が先日応募した少し怪しいアルバイトの採用通知だ。</p>
+        <p>少しの不安と少しの好奇心を胸に、貴方は記載された住所へと赴く。</p>
+        <p>郊外にある秘密の地下施設。</p>
+        <p>異現実収容研究所　来栖支部へようこそ。</p>
+        <button id="popupClose">サイトへアクセスする</button>
+    </div>
+</div>
+
+<!-- TOP BAR -->
+<div class="topbar">
+    <span style="display: inline-block">接続先: <b>SITE-Undertica-SECURE-DB-03</b></span>
+    <b>|</b>
+    <span style="display: inline-block">暗号化: <b>AES-256</b></span>
+    <b>|</b>
+    <span style="display: inline-block">セッション: <b>AUTR-1250-KMTH</b></span>
+    <span class="topbar-right" id="clock"></span>
+</div>
+
+<!-- HEADER -->
+<header class="site-header">
+    <a href="index.html" class="site-logo">
+        <div class="logo-mark"><img src="img/logo.png" alt="Anomareal Lab"></div>
+        <div class="logo-text">
+            <span class="logo-main">Anomarial Lab</span>
+            <span class="logo-sub">ANOMAREAL CONTAINMENT INSTITUTE — KURUSU</span>
+        </div>
+    </a>
+    <div class="header-user">
+        <span class="user-label">▶ AUTHENTICATED USER</span>
+        <span class="user-name">Guest Researcher</span>
+        <span class="user-level">CLEARANCE LEVEL: VISITOR</span>
+    </div>
+</header>
+
+<!-- PC NAV -->
+<nav class="headerNav pc">
+    <ul class="site-nav">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="glossary.html">世界観-用語説明</a></li>
+        <li><a href="#">一般公開資料</a></li>
+        <li><a href="#">Credit</a></li>
+    </ul>
+</nav>
+
+<!-- SP NAV -->
+<nav class="headerNav sp">
+    <div class="sp-menu-overlay" id="spMenu">
+        <ul class="site-nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="glossary.html">世界観-用語説明</a></li>
+            <li><a href="#">一般公開資料</a></li>
+            <li><a href="#">Credit</a></li>
+        </ul>
+    </div>
+</nav>
+<button class="hamburger-btn" id="hamburger" aria-label="メニュー">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+</button>
+
+<!-- MAIN LAYOUT -->
+<div class="wrap">
+    <main>
+
+        <!-- ABOUT -->
+        <section style="margin-bottom: 48px;">
+            <div class="section-header">
+                <h2>当イベントについて</h2>
+                <span class="section-id">REF: ACI-GENERAL-001</span>
+            </div>
+            <div class="explanationWrap">
+                <div class="text-col">
+                    <p>PUBLIC INFORMATION DOCUMENT</p>
+                    <p>VRChat RP型イベント「異現実収容研究所」一般公開用WEBサイトへようこそ。</p>
+                    <p>当イベントは「対話型アトラクションRPイベント」です。<br>
+                    一部ジャンプスケアやホラー描写がございますので苦手な方はお控えください。<br>
+                    皆様には臨時研究員「測定員」として未知の存在「異現実」との対話を試みていただきます。</p>
+                    <div class="explanationButtonWrap">
+                        <a href="https://vrchat.com/home/group/grp_bea6d950-9024-4336-a939-9d74d0cdbd9a" target="_blank" rel="noopener">VRC Group</a>
+                        <a href="https://x.com/anomareal_lab" target="_blank" rel="noopener">X Account</a>
+                    </div>
+                </div>
+                <div class="movie">
+                    <iframe width="400" height="225"
+                        src="https://www.youtube.com/embed/udHeMA-ICes"
+                        title="異現実収容研究所　測定員向け説明動画"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    <p>イベント紹介動画はこちら</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRECAUTIONS -->
+        <section class="precautions" style="margin-bottom: 48px;">
+            <div class="section-header">
+                <h2>注意事項</h2>
+                <span class="section-id">PROTOCOL: VISITOR-CONDUCT-V3</span>
+            </div>
+            <div class="precautionsGrid">
+                <div class="precautionsWrap">
+                    <h3>参加条件</h3>
+                    <ul>
+                        <li>PCVRで参加可能な方</li>
+                        <li>ホラー、RPイベントに理解がある方</li>
+                        <li>New User以上の方</li>
+                        <li>マイクONにできる方、日本語話者</li>
+                        <li>以下記載の注意事項を守れる方</li>
+                    </ul>
+                </div>
+                <div class="precautionsWrap">
+                    <h3>事前注意</h3>
+                    <ul>
+                        <li>当イベントは撮影禁止です。スクリーンショットもお控えください。</li>
+                        <li>キャストに対するセクハラ、嫌がらせ、メタ発言等はおやめください。</li>
+                        <li>アバター容量30MB以下、身長120～150推奨です。</li>
+                        <li>世界観を崩さないために測定員(お客様)の人外、動物アバターはお控えください。</li>
+                        <li>その他パーティクルや過度な発光、武器や魔法ギミックなども禁止させていただきます。</li>
+                        <li>イベント中はシールドレベルを0にしてください。臨場感をより楽しめます。</li>
+                        <li>キャストのプロフィールを確認する、フレンド申請を送るなどはイベント中はお控えください。</li>
+                        <li>皆様は臨時研究員「測定員」として異現実と相対します。RPをするとよりイベントをお楽しみいただけます。</li>
+                        <li>あなた方の安全は我々が保証します。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- DATABASE -->
+        <section class="anomarealDB">
+            <div class="section-header">
+                <h2>一般公開資料</h2>
+                <span class="section-id">DATABASE: ANOMAREAL-PUBLIC-INDEX</span>
+            </div>
+            <div class="anomarealTableWrapper">
+                <table class="anomarealTable">
+                    <thead>
+                        <tr>
+                            <th>番号</th>
+                            <th>カテゴリ</th>
+                            <th>名称 / 概要</th>
+                            <th>担当</th>
+                            <th>収容施設</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="anomarealNum">AC-009</td>
+                            <td class="anomarealClass">F/H</td>
+                            <td class="anomarealTitle">ハっとする鳩</td>
+                            <td class="anomarealCharge">■■■■■■■■■■■■■</td>
+                            <td class="anomarealCharge">■■■■■■■■■■■■■</td>
+                            <td><a href="" class="anomarealButton">詳細</a></td>
+                        </tr>
+                        <tr>
+                            <td class="anomarealNum">AC-026</td>
+                            <td class="anomarealClass">F/H</td>
+                            <td class="anomarealTitle">指輪頭の小鬼</td>
+                            <td class="anomarealCharge">■■■■■■■■■■■■■</td>
+                            <td class="anomarealCharge">■■■■■■■■■■■■■</td>
+                            <td><a href="" class="anomarealButton">詳細</a></td>
+                        </tr>
+                        <tr>
+                            <td class="anomarealNum">AC-087</td>
+                            <td class="anomarealClass">N/P</td>
+                            <td class="anomarealTitle">磔の咎人</td>
+                            <td class="anomarealCharge">■■■■■■■■■■■■■</td>
+                            <td class="anomarealCharge">■■■■■■■■■■■■■</td>
+                            <td><a href="" class="anomarealButton">詳細</a></td>
+                        </tr>
+                        <tr>
+                            <td class="anomarealNum">AC-109</td>
+                            <td class="anomarealClass">F/H</td>
+                            <td class="anomarealTitle">聖マルコスのランプ</td>
+                            <td class="anomarealCharge">■■■■■■■■■■■■■</td>
+                            <td class="anomarealCharge">■■■■■■■■■■■■■</td>
+                            <td><a href="" class="anomarealButton">詳細</a></td>
+                        </tr>
+                        <tr>
+                            <td class="anomarealNum">AC-119</td>
+                            <td class="anomarealClass">N/U</td>
+                            <td class="anomarealTitle">fire extinguisher man (消火器マン)</td>
+                            <td class="anomarealCharge">■■■■■■■■■■■■■</td>
+                            <td class="anomarealCharge">■■■■■■■■■■■■■</td>
+                            <td><a href="" class="anomarealButton">詳細</a></td>
+                        </tr>
+                        <tr>
+                            <td class="anomarealNum">AC-121</td>
+                            <td class="anomarealClass">N/U</td>
+                            <td class="anomarealTitle">マッドマンズ・プール</td>
+                            <td class="anomarealCharge">■■■■■■■■■■■■■</td>
+                            <td class="anomarealCharge">■■■■■■■■■■■■■</td>
+                            <td><a href="" class="anomarealButton">詳細</a></td>
+                        </tr>
+                        <tr>
+                            <td class="anomarealNum">AC-192</td>
+                            <td class="anomarealClass">F/U</td>
+                            <td class="anomarealTitle">ブラックアルバム</td>
+                            <td class="anomarealCharge">■■■■■■■■■■■■■</td>
+                            <td class="anomarealCharge">■■■■■■■■■■■■■</td>
+                            <td><a href="" class="anomarealButton">詳細</a></td>
+                        </tr>
+                        <tr>
+                            <td class="anomarealNum">AC-206</td>
+                            <td class="anomarealClass">O/H</td>
+                            <td class="anomarealTitle">nude model</td>
+                            <td class="anomarealCharge">■■■■■■■■■■■■■</td>
+                            <td class="anomarealCharge">■■■■■■■■■■■■■</td>
+                            <td><a href="" class="anomarealButton">詳細</a></td>
+                        </tr>
+                        <tr>
+                            <td class="anomarealNum">AC-999</td>
+                            <td class="anomarealClass">F/U</td>
+                            <td class="anomarealTitle">異現実喫茶</td>
+                            <td class="anomarealCharge">■■■■■■■■■■■■■</td>
+                            <td class="anomarealCharge">■■■■■■■■■■■■■</td>
+                            <td><a href="" class="anomarealButton">詳細</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ASIDE -->
+    <aside>
+        <div class="aside-block">
+            <h3>Facility Status</h3>
+            <div class="aside-stat">
+                <span class="label">THREAT LEVEL</span>
+                <span class="value red">MODERATE</span>
+            </div>
+            <div class="aside-stat">
+                <span class="label">CONTAINED</span>
+                <span class="value">9 entities</span>
+            </div>
+            <div class="aside-stat">
+                <span class="label">ACTIVE STAFF</span>
+                <span class="value">■■■</span>
+            </div>
+            <div class="aside-stat">
+                <span class="label">BRANCH</span>
+                <span class="value">KURUSU-7</span>
+            </div>
+        </div>
+        <div class="aside-block">
+            <h3>Recent Alerts</h3>
+            <div class="aside-alert">
+                <div class="alert-level">NOTICE — LEVEL 1</div>
+                <p>AC-119の定期測定が予定されています。測定員は準備を行ってください。</p>
+            </div>
+            <div class="aside-alert">
+                <div class="alert-level">INFO</div>
+                <p>次回イベント日程は近日公開予定です。Xアカウントをご確認ください。</p>
+            </div>
+        </div>
+        <div class="aside-block">
+            <h3>Access Log</h3>
+            <div class="aside-stat">
+                <span class="label">SESSION</span>
+                <span class="value" id="sessionId">—</span>
+            </div>
+            <div class="aside-stat">
+                <span class="label">CONNECTED</span>
+                <span class="value" id="connTime">—</span>
+            </div>
+        </div>
+    </aside>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+    <span class="footer-copy">© ANOMAREAL CONTAINMENT INSTITUTE — ALL RIGHTS RESERVED</span>
+    <ul>
+        <li><a href="login.html">login</a></li>
+    </ul>
+</footer>
+
+<script>
+    // Popup — sessionStorage で離脱するまで再表示しない
+    const popup = document.getElementById('welcomePopup');
+    if (!sessionStorage.getItem('popupSeen')) {
+        popup.classList.add('active');
+    }
+    document.getElementById('popupClose').addEventListener('click', () => {
+        popup.classList.remove('active');
+        sessionStorage.setItem('popupSeen', '1');
+    });
+    // 閉じるボタンを押さずに別ページへ移動した場合もフラグを保存
+    window.addEventListener('pagehide', () => {
+        sessionStorage.setItem('popupSeen', '1');
+    });
+ 
+    // Clock
+    function updateClock() {
+        const now = new Date();
+        const pad = n => String(n).padStart(2, '0');
+        document.getElementById('clock').textContent =
+            `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+ 
+    // Session info
+    const sid = Math.random().toString(36).slice(2, 10).toUpperCase();
+    document.getElementById('sessionId').textContent = sid;
+    const now = new Date();
+    document.getElementById('connTime').textContent =
+        `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+ 
+    // Hamburger
+    const btn = document.getElementById('hamburger');
+    const menu = document.getElementById('spMenu');
+    btn.addEventListener('click', () => {
+        const open = btn.classList.toggle('is-open');
+        menu.classList.toggle('is-open', open);
+        document.body.classList.toggle('nav-open', open);
+    });
+</script>
+</body>
+</html>

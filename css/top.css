@@ -1,0 +1,341 @@
+/* ===== POPUP ===== */
+.popup-overlay {
+    display: flex;
+    opacity: 0;
+    visibility: hidden;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.popup-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+.popup-content {
+    background: #111;
+    border: 1px solid #333;
+    padding: 48px 40px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+}
+.popup-content::before {
+    content: '// SECURE ACCESS TERMINAL //';
+    display: block;
+    font-family: 'Share Tech Mono', 'Courier Prime', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: #444;
+    margin-bottom: 32px;
+}
+.popup-content::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 40px; height: 40px;
+    border-top: 2px solid #8b0000;
+    border-left: 2px solid #8b0000;
+}
+.popup-content p {
+    color: #ccc;
+    font-size: 13px;
+    line-height: 2;
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    margin-bottom: 6px;
+}
+.popup-content p:first-of-type {
+    color: #888;
+    font-size: 11px;
+    font-family: 'Share Tech Mono', 'Courier Prime', monospace;
+    letter-spacing: 1px;
+}
+.popup-content p:last-of-type {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 32px;
+}
+#popupClose {
+    font-family: 'Share Tech Mono', 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    background: transparent;
+    color: #fff;
+    border: 1px solid #555;
+    padding: 12px 32px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+#popupClose:hover {
+    border-color: #8b0000;
+    color: #8b0000;
+}
+
+/* ===== SECTION HEADERS ===== */
+.section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #0a0a0a;
+}
+.section-header h2 {
+    font-family: 'Share Tech Mono', 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #0a0a0a;
+}
+.section-header .section-id {
+    font-family: 'Share Tech Mono', 'Courier Prime', monospace;
+    font-size: 9px;
+    color: #aaa8a3;
+    letter-spacing: 2px;
+}
+
+/* ===== EXPLANATION ===== */
+.explanationWrap {
+    display: flex;
+    gap: 48px;
+    align-items: flex-start;
+    margin-bottom: 48px;
+    padding: 24px;
+    background: #fff;
+    border: 1px solid #d0cdc8;
+    position: relative;
+}
+.explanationWrap::before {
+    content: 'DOC-001';
+    position: absolute;
+    top: -1px; right: 16px;
+    font-family: 'Share Tech Mono', 'Courier Prime', monospace;
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: #aaa8a3;
+    background: #fff;
+    padding: 0 8px;
+    transform: translateY(-50%);
+}
+.explanationWrap .text-col { 
+    flex: 1; min-width: 0; 
+}
+.explanationWrap p {
+    color: #3a3835;
+    margin-bottom: 12px;
+    font-size: 13px;
+}
+.explanationWrap p:first-child {
+    font-family: 'Share Tech Mono', 'Courier Prime', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #aaa8a3;
+    margin-bottom: 16px;
+}
+
+.explanationButtonWrap {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+.explanationButtonWrap a {
+    font-family: 'Share Tech Mono', 'Courier Prime', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border: 1px solid #0a0a0a;
+    color: #0a0a0a;
+    transition: all 0.15s;
+}
+.explanationButtonWrap a:hover {
+    background: #0a0a0a;
+    color: #fff
+}
+
+.movie { flex-shrink: 0; }
+.movie iframe {
+    display: block;
+    border: 2px solid #0a0a0a;
+    max-width: 100%;
+}
+.movie p {
+    font-family: 'Share Tech Mono', 'Courier Prime', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: #aaa8a3;
+    text-align: center;
+    margin-top: 6px !important;
+}
+
+/* ===== PRECAUTIONS ===== */
+.precautions {
+    margin-bottom: 48px;
+}
+.precautionsGrid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1px;
+    background: #d0cdc8;
+    border: 1px solid #d0cdc8;
+}
+.precautionsWrap {
+    background: #fff;
+    padding: 24px;
+}
+.precautionsWrap h3 {
+    font-family: 'Share Tech Mono', 'Courier Prime', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #6b6966;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #d0cdc8;
+}
+.precautionsWrap ul {
+    list-style: none;
+    padding: 0;
+}
+.precautionsWrap ul li {
+    font-size: 12px;
+    color: #3a3835;
+    padding: 6px 0 6px 20px;
+    border-bottom: 1px solid #e8e6e1;
+    position: relative;
+}
+.precautionsWrap ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    font-family: 'Share Tech Mono', 'Courier Prime', monospace;
+    color: #aaa8a3;
+}
+.precautionsWrap ul li:last-child { 
+    border-bottom: none; 
+}
+
+/* ===== DATABASE TABLE ===== */
+.anomarealDB {
+    margin-bottom: 48px;
+}
+.anomarealTableWrapper {
+    width: 100%;
+    overflow-x: auto;
+    display: block;
+    border: 1px solid #d0cdc8;
+    -webkit-overflow-scrolling: touch;
+}
+.anomarealTable {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: collapse;
+    font-size: 12px;
+    background: #fff;
+}
+.anomarealTable thead tr {
+    background: #0a0a0a;
+}
+.anomarealTable th {
+    font-family: 'Share Tech Mono', 'Courier Prime', monospace;
+    font-size: 8px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #666;
+    text-align: left;
+    padding: 10px 14px;
+    white-space: nowrap;
+    border-right: 1px solid #1a1a1a;
+}
+.anomarealTable th:last-child { 
+    border-right: none; 
+}
+.anomarealTable tbody tr {
+    cursor: pointer;
+    border-bottom: 1px solid #e8e6e1;
+    transition: background 0.1s;
+}
+.anomarealTable tbody tr:hover {
+     background: #e8e6e1;
+    }
+.anomarealTable tbody tr td {
+    padding: 11px 14px;
+    vertical-align: middle;
+    border-right: 1px solid #e8e6e1;
+}
+.anomarealTable tbody tr td:last-child { 
+    border-right: none;
+}
+.anomarealNum {
+    font-family: 'Share Tech Mono', 'Courier Prime', monospace;
+    font-size: 12px;
+    font-weight: bold;
+    color: #0a0a0a;
+    white-space: nowrap;
+    letter-spacing: 1px;
+}
+.anomarealClass {
+    font-family: 'Share Tech Mono', 'Courier Prime', monospace;
+    font-size: 11px;
+    text-align: center;
+    white-space: nowrap;
+    color: #6b6966;
+}
+.anomarealTitle {
+    font-size: 12px;
+    color: #0a0a0a;
+}
+.anomarealCharge {
+    font-family: 'Share Tech Mono', 'Courier Prime', monospace;
+    font-size: 11px;
+    color: #aaa8a3;
+    white-space: nowrap;
+}
+.anomarealButton {
+    display: inline-block;
+    padding: 4px 12px;
+    background: transparent;
+    border: 1px solid #d0cdc8;
+    font-family: 'Share Tech Mono', 'Courier Prime', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: #6b6966;
+    white-space: nowrap;
+    transition: all 0.1s;
+}
+.anomarealButton:hover {
+    border-color: #0a0a0a;
+    color: #0a0a0a;
+    background: #0a0a0a;
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .explanationWrap {
+        flex-direction: column;
+        gap: 24px;
+        padding: 20px 16px;
+    }
+    .movie iframe { 
+        width: 100%; height: auto; aspect-ratio: 16/9; 
+    }
+    .precautionsGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .explanationButtonWrap { 
+        flex-direction: column; 
+    }
+    .explanationButtonWrap a { 
+        text-align: center; 
+    }
+}

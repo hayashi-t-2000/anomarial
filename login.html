@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SECURE LOGIN — 異現実収容研究所</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Zen+Kaku+Gothic+New:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --white: #f2f0eb;
+            --gray-100: #e8e6e1;
+            --gray-200: #d0cdc8;
+            --gray-300: #aaa8a3;
+            --gray-500: #6b6966;
+            --gray-700: #3a3835;
+            --red: #8b0000;
+            --red-light: #c0392b;
+            --green: #1a4a1a;
+            --green-light: #2a6b2a;
+            --mono: 'Share Tech Mono', monospace;
+            --sans: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            height: 100%;
+            background: var(--black);
+            font-family: var(--mono);
+            color: #aaa;
+        }
+
+        /* Scanline effect */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,0,0,0.08) 2px,
+                rgba(0,0,0,0.08) 4px
+            );
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* ===== LAYOUT ===== */
+        .page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ===== TOP BAR ===== */
+        .topbar {
+            background: #050505;
+            border-bottom: 1px solid #1a1a1a;
+            padding: 5px 32px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: #333;
+            flex-shrink: 0;
+        }
+        .topbar b { color: #b7b7b7; }
+        .topbar .topbar-right { margin-left: auto; }
+
+        /* ===== MAIN ===== */
+        .login-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 16px;
+            position: relative;
+        }
+
+        /* Background grid */
+        .login-wrap::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== LOGO AREA ===== */
+        .login-logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .login-logo .logo-ring {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+        .login-logo .logo-ring img {
+            width: 100%;
+        }
+        .login-logo h1 {
+            font-size: 11px;
+            letter-spacing: 4px;
+            color: #555;
+            margin-bottom: 6px;
+        }
+        .login-logo p {
+            font-size: 8px;
+            letter-spacing: 3px;
+            color: #2a2a2a;
+        }
+
+        /* ===== CARD ===== */
+        .login-card {
+            background: #0f0f0f;
+            border: 1px solid #222;
+            position: relative;
+        }
+
+        /* Corner accents */
+        .login-card::before,
+        .login-card::after {
+            content: '';
+            position: absolute;
+            width: 16px; height: 16px;
+        }
+        .login-card::before {
+            top: -1px; left: -1px;
+            border-top: 2px solid var(--red);
+            border-left: 2px solid var(--red);
+        }
+        .login-card::after {
+            bottom: -1px; right: -1px;
+            border-bottom: 2px solid #333;
+            border-right: 2px solid #333;
+        }
+
+        .card-header {
+            background: #050505;
+            border-bottom: 1px solid #1a1a1a;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .card-header .title {
+            font-size: 9px;
+            letter-spacing: 3px;
+            color: #444;
+        }
+        .card-header .status-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--green-light);
+            box-shadow: 0 0 6px var(--green-light);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .card-body { padding: 32px 28px; }
+
+        /* ===== FORM ===== */
+        .field {
+            margin-bottom: 20px;
+        }
+        .field label {
+            display: block;
+            font-size: 8px;
+            letter-spacing: 3px;
+            color: #444;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        .field input {
+            width: 100%;
+            background: #070707;
+            border: 1px solid #222;
+            border-top-color: #2a2a2a;
+            color: #aaa;
+            font-family: var(--mono);
+            font-size: 13px;
+            padding: 11px 14px;
+            outline: none;
+            transition: border-color 0.15s, box-shadow 0.15s;
+            letter-spacing: 1px;
+            -webkit-appearance: none;
+        }
+        .field input:focus {
+            border-color: #444;
+            box-shadow: 0 0 0 1px #333 inset;
+            color: #ccc;
+        }
+        .field input.error {
+            border-color: var(--red) !important;
+            box-shadow: 0 0 0 1px var(--red) inset;
+            animation: shake 0.35s ease;
+        }
+        @keyframes shake {
+            0%,100% { transform: translateX(0); }
+            20% { transform: translateX(-6px); }
+            40% { transform: translateX(6px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
+        }
+        .field input::placeholder { color: #2a2a2a; }
+
+        /* ===== SUBMIT ===== */
+        .submit-btn {
+            width: 100%;
+            background: transparent;
+            border: 1px solid #333;
+            color: #666;
+            font-family: var(--mono);
+            font-size: 9px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            padding: 13px;
+            cursor: pointer;
+            transition: all 0.15s;
+            position: relative;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+        .submit-btn:hover:not(:disabled) {
+            border-color: #555;
+            color: #aaa;
+            background: #111;
+        }
+        .submit-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        .submit-btn.loading {
+            color: transparent;
+        }
+        .submit-btn.loading::after {
+            content: '';
+            position: absolute;
+            left: 50%; top: 50%;
+            transform: translate(-50%, -50%);
+            width: 14px; height: 14px;
+            border: 1px solid #444;
+            border-top-color: #888;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+        @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+        /* ===== MESSAGES ===== */
+        .msg-area {
+            min-height: 48px;
+            margin-bottom: 20px;
+        }
+
+        .msg {
+            padding: 10px 14px;
+            font-size: 10px;
+            letter-spacing: 1px;
+            line-height: 1.7;
+            display: none;
+            position: relative;
+            padding-left: 28px;
+        }
+        .msg.show { display: block; }
+
+        .msg::before {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            font-size: 10px;
+        }
+
+        .msg.error-msg {
+            background: rgba(139,0,0,0.12);
+            border: 1px solid rgba(139,0,0,0.4);
+            color: #c0392b;
+        }
+        .msg.error-msg::before { content: '✕'; }
+
+        .msg.warn-msg {
+            background: rgba(100,60,0,0.15);
+            border: 1px solid rgba(180,100,0,0.4);
+            color: #c07830;
+            animation: warn-flash 0.5s ease;
+        }
+        .msg.warn-msg::before { content: '⚠'; }
+        @keyframes warn-flash {
+            0% { background: rgba(180,80,0,0.3); }
+            100% { background: rgba(100,60,0,0.15); }
+        }
+
+        .msg.lock-msg {
+            background: rgba(139,0,0,0.2);
+            border: 1px solid var(--red);
+            color: #ff4444;
+        }
+        .msg.lock-msg::before { content: '🔒'; font-size: 9px; }
+
+        /* ===== ATTEMPT COUNTER ===== */
+        .attempt-counter {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #1a1a1a;
+        }
+        .attempt-label {
+            font-size: 8px;
+            letter-spacing: 2px;
+            color: #2a2a2a;
+            margin-right: 4px;
+        }
+        .attempt-pip {
+            width: 8px; height: 8px;
+            border: 1px solid #222;
+            border-radius: 1px;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        .attempt-pip.used { background: var(--red); border-color: var(--red); }
+        .attempt-pip.warn { background: #c07830; border-color: #c07830; }
+
+        /* ===== CARD FOOTER ===== */
+        .card-footer {
+            background: #050505;
+            border-top: 1px solid #1a1a1a;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card-footer span {
+            font-size: 8px;
+            letter-spacing: 1px;
+            color: #2a2a2a;
+        }
+        .card-footer a {
+            font-size: 8px;
+            letter-spacing: 1px;
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .card-footer a:hover { color: #666; }
+
+        /* ===== LOCKOUT OVERLAY ===== */
+        .lockout-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.97);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+        }
+        .lockout-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .lockout-box {
+            text-align: center;
+            padding: 48px 40px;
+            border: 1px solid #333;
+            max-width: 440px;
+            width: 90%;
+            position: relative;
+        }
+        .lockout-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 32px; height: 32px;
+            border-top: 2px solid var(--red);
+            border-left: 2px solid var(--red);
+        }
+        .lockout-box::after {
+            content: '';
+            position: absolute;
+            bottom: 0; right: 0;
+            width: 32px; height: 32px;
+            border-bottom: 2px solid var(--red);
+            border-right: 2px solid var(--red);
+        }
+        .lockout-icon {
+            font-size: 32px;
+            margin-bottom: 20px;
+            display: block;
+        }
+        .lockout-box h2 {
+            font-size: 11px;
+            letter-spacing: 4px;
+            color: var(--red-light);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+        .lockout-box p {
+            font-size: 11px;
+            color: #555;
+            line-height: 2;
+            margin-bottom: 8px;
+            font-family: var(--sans);
+            letter-spacing: 0;
+        }
+        .lockout-box .ref {
+            font-size: 8px;
+            letter-spacing: 2px;
+            color: #2a2a2a;
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid #1a1a1a;
+        }
+        .lockout-countdown {
+            font-size: 28px;
+            color: var(--red);
+            letter-spacing: 4px;
+            margin: 20px 0;
+        }
+        .lockout-dismiss {
+            margin-top: 24px;
+            font-family: var(--mono);
+            font-size: 9px;
+            letter-spacing: 3px;
+            background: transparent;
+            border: 1px solid #333;
+            color: #444;
+            padding: 10px 24px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .lockout-dismiss:hover {
+            border-color: #555;
+            color: #777;
+        }
+
+        /* ===== FOOTER ===== */
+        .site-footer {
+            background: #050505;
+            border-top: 1px solid #1a1a1a;
+            padding: 14px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .site-footer span {
+            font-size: 8px;
+            letter-spacing: 2px;
+            color: #222;
+        }
+        .site-footer a {
+            font-size: 8px;
+            letter-spacing: 1px;
+            color: #2a2a2a;
+            text-decoration: none;
+        }
+        .site-footer a:hover { color: #555; }
+
+        @media (max-width: 480px) {
+            .card-body { padding: 24px 20px; }
+            .topbar { padding: 5px 16px; font-size: 8px; }
+            .site-footer { padding: 12px 16px; }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+        <span style="display: inline-block">接続先: <b>SITE-Undertica-SECURE-DB-03</b></span>
+        <b>|</b>
+        <span style="display: inline-block">暗号化: <b>AES-256</b></span>
+        <b>|</b>
+        <span style="display: inline-block">セッション: <b>AUTR-1250-KMTH</b></span>
+        <span class="topbar-right" id="clock"></span>
+    </div>
+
+    <!-- MAIN -->
+    <div class="login-wrap">
+        <div class="login-container">
+
+            <!-- LOGO -->
+            <div class="login-logo">
+                <div class="logo-ring"><img src="img/logo_white.png" alt="Anomareal Lab"></div>
+                <h1>ANOMARIAL LAB</h1>
+                <p>ANOMAREAL CONTAINMENT INSTITUTE — KURUSU BRANCH</p>
+            </div>
+
+            <!-- CARD -->
+            <div class="login-card">
+                <div class="card-header">
+                    <span class="title">SECURE TERMINAL — AUTH REQUIRED</span>
+                    <span class="status-dot"></span>
+                </div>
+
+                <div class="card-body">
+                    <!-- Message area -->
+                    <div class="msg-area">
+                        <div class="msg error-msg" id="msgError"></div>
+                        <div class="msg warn-msg" id="msgWarn"></div>
+                        <div class="msg lock-msg" id="msgLock"></div>
+                    </div>
+
+                    <!-- Form -->
+                    <div class="field">
+                        <label>Research ID</label>
+                        <input type="text" id="inputId" placeholder="ACI-XXXX-XXXX" autocomplete="off" spellcheck="false">
+                    </div>
+                    <div class="field">
+                        <label>Access Code</label>
+                        <input type="password" id="inputPass" placeholder="••••••••••••" autocomplete="off">
+                    </div>
+
+                    <button class="submit-btn" id="submitBtn">AUTHENTICATE</button>
+
+                    <!-- Attempt tracker -->
+                    <div class="attempt-counter">
+                        <span class="attempt-label">ATTEMPTS</span>
+                        <span class="attempt-pip" id="pip1"></span>
+                        <span class="attempt-pip" id="pip2"></span>
+                        <span class="attempt-pip" id="pip3"></span>
+                        <span class="attempt-pip" id="pip4"></span>
+                        <span class="attempt-pip" id="pip5"></span>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <span id="sessionLabel">SESSION: —</span>
+                    <a href="index.html">← 公開サイトへ戻る</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <span>© ANOMAREAL CONTAINMENT INSTITUTE — ALL RIGHTS RESERVED</span>
+        <span>UNAUTHORIZED ACCESS IS STRICTLY PROHIBITED</span>
+    </footer>
+
+</div>
+
+<!-- LOCKOUT OVERLAY -->
+<div class="lockout-overlay" id="lockoutOverlay">
+    <div class="lockout-box">
+        <span class="lockout-icon">⛔</span>
+        <h2>ACCESS SUSPENDED</h2>
+        <p>認証試行回数の上限を超過しました。</p>
+        <p>このインシデントは記録され、セキュリティ担当に通知されました。</p>
+        <div class="lockout-countdown" id="lockoutCountdown">30</div>
+        <p style="font-size:9px; letter-spacing:2px; color:#333;">SECONDS REMAINING</p>
+        <div class="ref">REF: ACI-SEC-PROTOCOL-7 / INCIDENT LOG: <span id="incidentId"></span></div>
+        <button class="lockout-dismiss" id="lockoutDismiss" style="display:none;">ACKNOWLEDGE</button>
+    </div>
+</div>
+
+<script>
+    // Clock
+    function updateClock() {
+        const now = new Date();
+        const p = n => String(n).padStart(2,'0');
+        document.getElementById('clock').textContent =
+            `${now.getFullYear()}-${p(now.getMonth()+1)}-${p(now.getDate())} ${p(now.getHours())}:${p(now.getMinutes())}:${p(now.getSeconds())}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Session ID
+    const sid = Math.random().toString(36).slice(2,10).toUpperCase();
+    document.getElementById('sessionLabel').textContent = `SESSION: ${sid}`;
+    document.getElementById('incidentId').textContent =
+        `INC-${Date.now().toString(36).toUpperCase().slice(-6)}`;
+
+    // State
+    let attempts = 0;
+    const MAX_WARN = 3;
+    const MAX_LOCK = 5;
+    let locked = false;
+
+    const inputId   = document.getElementById('inputId');
+    const inputPass = document.getElementById('inputPass');
+    const submitBtn = document.getElementById('submitBtn');
+    const msgError  = document.getElementById('msgError');
+    const msgWarn   = document.getElementById('msgWarn');
+    const msgLock   = document.getElementById('msgLock');
+    const pips      = [1,2,3,4,5].map(i => document.getElementById(`pip${i}`));
+    const lockoutOverlay  = document.getElementById('lockoutOverlay');
+    const lockoutCountdown = document.getElementById('lockoutCountdown');
+    const lockoutDismiss  = document.getElementById('lockoutDismiss');
+
+    // Error messages (rotates)
+    const errorMessages = [
+        'AUTHENTICATION FAILED — 認証情報が一致しません。',
+        'ACCESS DENIED — IDまたはアクセスコードが正しくありません。',
+        'AUTHENTICATION FAILED — 入力情報を確認してください。',
+        'INVALID CREDENTIALS — 認証に失敗しました。',
+        'ACCESS REJECTED — 認証情報が無効です。',
+    ];
+
+    function hideAllMsgs() {
+        msgError.classList.remove('show');
+        msgWarn.classList.remove('show');
+        msgLock.classList.remove('show');
+    }
+
+    function showError(text) {
+        hideAllMsgs();
+        msgError.textContent = text;
+        msgError.classList.add('show');
+    }
+    function showWarn(text) {
+        hideAllMsgs();
+        msgWarn.textContent = text;
+        msgWarn.classList.add('show');
+    }
+    function showLockMsg(text) {
+        hideAllMsgs();
+        msgLock.textContent = text;
+        msgLock.classList.add('show');
+    }
+
+    function updatePips() {
+        pips.forEach((pip, i) => {
+            pip.classList.remove('used','warn');
+            if (i < attempts) {
+                pip.classList.add(attempts >= MAX_WARN ? 'used' : 'warn');
+            }
+        });
+        // Red after warning threshold
+        if (attempts >= MAX_WARN) {
+            pips.forEach((pip, i) => {
+                if (i < attempts) pip.classList.add('used');
+            });
+        }
+    }
+
+    function shakeInputs() {
+        [inputId, inputPass].forEach(el => {
+            el.classList.remove('error');
+            void el.offsetWidth; // reflow
+            el.classList.add('error');
+        });
+        setTimeout(() => {
+            inputId.classList.remove('error');
+            inputPass.classList.remove('error');
+        }, 400);
+    }
+
+    function doLogin() {
+        if (locked) return;
+
+        const id   = inputId.value.trim();
+        const pass = inputPass.value;
+
+        if (!id || !pass) {
+            showError('MISSING INPUT — IDとアクセスコードを入力してください。');
+            return;
+        }
+
+        // Loading state
+        submitBtn.classList.add('loading');
+        submitBtn.disabled = true;
+
+        setTimeout(() => {
+            submitBtn.classList.remove('loading');
+            submitBtn.disabled = false;
+
+            attempts++;
+            updatePips();
+            shakeInputs();
+            inputPass.value = '';
+
+            if (attempts >= MAX_LOCK) {
+                // Full lockout
+                locked = true;
+                submitBtn.disabled = true;
+                showLockMsg('⚠ アクセスが一時停止されました。セキュリティ担当に通知済みです。');
+                startLockout();
+            } else if (attempts >= MAX_WARN) {
+                // Warning
+                const remaining = MAX_LOCK - attempts;
+                showWarn(`⚠ WARNING — 認証失敗が${attempts}回を超過しました。残り${remaining}回でアクセスが一時停止されます。`);
+            } else {
+                // Normal error
+                const msg = errorMessages[attempts % errorMessages.length];
+                showError(msg);
+            }
+        }, 900 + Math.random() * 400); // random delay for realism
+    }
+
+    // Lockout countdown
+    function startLockout() {
+        lockoutOverlay.classList.add('show');
+        let sec = 30;
+        lockoutCountdown.textContent = sec;
+
+        const timer = setInterval(() => {
+            sec--;
+            lockoutCountdown.textContent = sec;
+            if (sec <= 0) {
+                clearInterval(timer);
+                lockoutCountdown.textContent = '00';
+                lockoutDismiss.style.display = 'inline-block';
+            }
+        }, 1000);
+    }
+
+    lockoutDismiss.addEventListener('click', () => {
+        lockoutOverlay.classList.remove('show');
+        // Reset
+        attempts = 0;
+        locked = false;
+        updatePips();
+        submitBtn.disabled = false;
+        hideAllMsgs();
+    });
+
+    // Button click
+    submitBtn.addEventListener('click', doLogin);
+
+    // Enter key
+    [inputId, inputPass].forEach(el => {
+        el.addEventListener('keydown', e => {
+            if (e.key === 'Enter') doLogin();
+        });
+    });
+</script>
+</body>
+</html>
