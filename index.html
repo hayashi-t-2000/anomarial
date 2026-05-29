@@ -9,6 +9,65 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Zen+Kaku+Gothic+New:wght@300;400;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== ACTION BUTTONS ===== */
+        .anomarealActions {
+            display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 0 4px;
+        }
+        .anomarealActionBtn {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-family: 'Share Tech Mono', 'Courier Prime', monospace; font-size: 9px; letter-spacing: 2px;
+            text-transform: uppercase; padding: 10px 20px;
+            background: #0a0a0a; color: #888; border: 1px solid #0a0a0a;
+            cursor: pointer; transition: color 0.15s, background 0.15s; white-space: nowrap;
+        }
+        .anomarealActionBtn:hover { background: #1a1a1a; color: #fff; }
+
+        /* ===== INFO POPUP ===== */
+        .info-popup-overlay {
+            display: flex; opacity: 0; visibility: hidden; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.82); justify-content: center; align-items: center;
+            z-index: 9990; transition: opacity 0.3s, visibility 0.3s; padding: 20px;
+        }
+        .info-popup-overlay.active { opacity: 1; visibility: visible; }
+        .info-popup {
+            background: #fff; border: 2px solid #0a0a0a;
+            width: 100%; max-width: 560px; max-height: 80vh; overflow-y: auto; position: relative;
+        }
+        .info-popup-header {
+            background: #0a0a0a; padding: 12px 16px;
+            display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 1; gap: 12px;
+        }
+        .info-popup-header .popup-title { font-family: 'Share Tech Mono', 'Courier Prime', monospace; font-size: 9px; letter-spacing: 3px; color: #888; }
+        .info-popup-header .popup-id { font-family: 'Share Tech Mono', 'Courier Prime', monospace; font-size: 8px; letter-spacing: 2px; color: #444; flex: 1; text-align: right; }
+        .info-popup-close {
+            font-family: 'Share Tech Mono', 'Courier Prime', monospace; font-size: 9px; letter-spacing: 1px;
+            background: transparent; border: 1px solid #333; color: #555;
+            padding: 4px 12px; cursor: pointer; transition: all 0.15s; flex-shrink: 0;
+        }
+        .info-popup-close:hover { border-color: #888; color: #aaa; }
+        .info-popup-body { padding: 24px 24px 28px; }
+        .info-popup-body h3 {
+            font-family: 'Share Tech Mono', 'Courier Prime', monospace; font-size: 10px; letter-spacing: 3px; color: #0a0a0a;
+            margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid #d0cdc8;
+        }
+        .info-popup-body p { font-size: 13px; color: #3a3835; line-height: 2; margin-bottom: 12px; }
+        .info-popup-body p:last-child { margin-bottom: 0; }
+        .popup-label {
+            font-family: 'Share Tech Mono', 'Courier Prime', monospace; font-size: 8px; letter-spacing: 3px;
+            color: #aaa8a3; display: block; margin: 20px 0 8px;
+        }
+        .info-popup-body ul { list-style: none; padding: 0; }
+        .info-popup-body ul li {
+            font-size: 12px; color: #3a3835; padding: 6px 0 6px 16px;
+            border-bottom: 1px solid #e8e6e1; position: relative; line-height: 1.8;
+        }
+        .info-popup-body ul li::before { content: '—'; position: absolute; left: 0; font-family: 'Share Tech Mono', 'Courier Prime', monospace; color: #aaa8a3; font-size: 10px; }
+        .info-popup-body ul li:last-child { border-bottom: none; }
+
+        .anomarealActionBtn .btn-icon { font-size: 8px; color: #c0392b; }
+    </style>
 </head>
 <body>
 
@@ -57,8 +116,8 @@
     <ul class="site-nav">
         <li><a href="index.html" class="active">Home</a></li>
         <li><a href="glossary.html">世界観-用語説明</a></li>
-        <li><a href="#">一般公開資料</a></li>
-        <li><a href="#">Credit</a></li>
+        <li><a href="index.html#anomarealDB">一般公開資料</a></li>
+        <li><a href="credit.html">Credit</a></li>
     </ul>
 </nav>
 
@@ -68,8 +127,8 @@
         <ul class="site-nav">
             <li><a href="index.html">Home</a></li>
             <li><a href="glossary.html">世界観-用語説明</a></li>
-            <li><a href="#">一般公開資料</a></li>
-            <li><a href="#">Credit</a></li>
+            <li><a href="index.html#anomarealDB">一般公開資料</a></li>
+            <li><a href="credit.html">Credit</a></li>
         </ul>
     </div>
 </nav>
@@ -148,7 +207,7 @@
         </section>
 
         <!-- DATABASE -->
-        <section class="anomarealDB">
+        <section class="anomarealDB" id="anomarealDB">
             <div class="section-header">
                 <h2>一般公開資料</h2>
                 <span class="section-id">DATABASE: ANOMAREAL-PUBLIC-INDEX</span>
@@ -172,7 +231,7 @@
                             <td class="anomarealTitle">ハっとする鳩</td>
                             <td class="anomarealCharge">■■■■■■■■■■■■■</td>
                             <td class="anomarealCharge">■■■■■■■■■■■■■</td>
-                            <td><a href="" class="anomarealButton">詳細</a></td>
+                            <td><a href="public-information/AC-009.html" class="anomarealButton">詳細</a></td>
                         </tr>
                         <tr>
                             <td class="anomarealNum">AC-026</td>
@@ -180,7 +239,7 @@
                             <td class="anomarealTitle">指輪頭の小鬼</td>
                             <td class="anomarealCharge">■■■■■■■■■■■■■</td>
                             <td class="anomarealCharge">■■■■■■■■■■■■■</td>
-                            <td><a href="" class="anomarealButton">詳細</a></td>
+                            <td><a href="public-information/AC-026.html" class="anomarealButton">詳細</a></td>
                         </tr>
                         <tr>
                             <td class="anomarealNum">AC-087</td>
@@ -188,7 +247,7 @@
                             <td class="anomarealTitle">磔の咎人</td>
                             <td class="anomarealCharge">■■■■■■■■■■■■■</td>
                             <td class="anomarealCharge">■■■■■■■■■■■■■</td>
-                            <td><a href="" class="anomarealButton">詳細</a></td>
+                            <td><a href="public-information/AC-087.html" class="anomarealButton">詳細</a></td>
                         </tr>
                         <tr>
                             <td class="anomarealNum">AC-109</td>
@@ -196,7 +255,7 @@
                             <td class="anomarealTitle">聖マルコスのランプ</td>
                             <td class="anomarealCharge">■■■■■■■■■■■■■</td>
                             <td class="anomarealCharge">■■■■■■■■■■■■■</td>
-                            <td><a href="" class="anomarealButton">詳細</a></td>
+                            <td><a href="public-information/AC-109.html" class="anomarealButton">詳細</a></td>
                         </tr>
                         <tr>
                             <td class="anomarealNum">AC-119</td>
@@ -204,7 +263,7 @@
                             <td class="anomarealTitle">fire extinguisher man (消火器マン)</td>
                             <td class="anomarealCharge">■■■■■■■■■■■■■</td>
                             <td class="anomarealCharge">■■■■■■■■■■■■■</td>
-                            <td><a href="" class="anomarealButton">詳細</a></td>
+                            <td><a href="public-information/AC-119.html" class="anomarealButton">詳細</a></td>
                         </tr>
                         <tr>
                             <td class="anomarealNum">AC-121</td>
@@ -212,7 +271,7 @@
                             <td class="anomarealTitle">マッドマンズ・プール</td>
                             <td class="anomarealCharge">■■■■■■■■■■■■■</td>
                             <td class="anomarealCharge">■■■■■■■■■■■■■</td>
-                            <td><a href="" class="anomarealButton">詳細</a></td>
+                            <td><a href="public-information/AC-121.html" class="anomarealButton">詳細</a></td>
                         </tr>
                         <tr>
                             <td class="anomarealNum">AC-192</td>
@@ -220,7 +279,7 @@
                             <td class="anomarealTitle">ブラックアルバム</td>
                             <td class="anomarealCharge">■■■■■■■■■■■■■</td>
                             <td class="anomarealCharge">■■■■■■■■■■■■■</td>
-                            <td><a href="" class="anomarealButton">詳細</a></td>
+                            <td><a href="public-information/AC-192.html" class="anomarealButton">詳細</a></td>
                         </tr>
                         <tr>
                             <td class="anomarealNum">AC-206</td>
@@ -228,7 +287,7 @@
                             <td class="anomarealTitle">nude model</td>
                             <td class="anomarealCharge">■■■■■■■■■■■■■</td>
                             <td class="anomarealCharge">■■■■■■■■■■■■■</td>
-                            <td><a href="" class="anomarealButton">詳細</a></td>
+                            <td><a href="public-information/AC-206.html" class="anomarealButton">詳細</a></td>
                         </tr>
                         <tr>
                             <td class="anomarealNum">AC-999</td>
@@ -236,10 +295,44 @@
                             <td class="anomarealTitle">異現実喫茶</td>
                             <td class="anomarealCharge">■■■■■■■■■■■■■</td>
                             <td class="anomarealCharge">■■■■■■■■■■■■■</td>
-                            <td><a href="" class="anomarealButton">詳細</a></td>
+                            <td><a href="public-information/AC-999.html" class="anomarealButton">詳細</a></td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="anomarealActions">
+                <button class="anomarealActionBtn" id="infoBtn">
+                    <span class="btn-icon">&#9658;</span>カテゴリとは
+                </button>
+            </div>
+
+            <div class="info-popup-overlay" id="infoPopup">
+                <div class="info-popup">
+                    <div class="info-popup-header">
+                        <span class="popup-title">TERMS &amp; DISCLAIMER</span>
+                        <span class="popup-id">ACI-LEGAL-001</span>
+                        <button class="info-popup-close" data-target="infoPopup">&#10005;</button>
+                    </div>
+                    <div class="info-popup-body">
+                        <h3>カテゴリ</h3>
+                        <span class="popup-label">TERMS OF USE</span>
+                        <ul>
+                            <li>適切な収容管理のためにカテゴリを選別する必要がある。友好/危険の頭文字表記で記録する。O/P(敵対かつ危険)は抹消対象とする。</li>
+                            <li>
+                                友好カテゴリ<br>
+                                Opponents・・・敵対、攻撃的<br>
+                                Neutral・・・中立<br>
+                                Friendly・・・友好、献身的<br>
+                            </li>
+                            <li>
+                                危険カテゴリ<br>
+                                Perilous・・・危険かつ制御不能、強大な力<br>
+                                Useful・・・危険かつ制御可能、有用可能<br>
+                                Harmless・・・無害、有用性なし<br>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -255,7 +348,7 @@
             </div>
             <div class="aside-stat">
                 <span class="label">CONTAINED</span>
-                <span class="value">9 entities</span>
+                <span class="value">■■■■■■ entities</span>
             </div>
             <div class="aside-stat">
                 <span class="label">ACTIVE STAFF</span>
@@ -338,6 +431,48 @@
         const open = btn.classList.toggle('is-open');
         menu.classList.toggle('is-open', open);
         document.body.classList.toggle('nav-open', open);
+    });
+</script>
+<script>
+    // ===== INFO POPUPS =====
+    function openInfoPopup(id) {
+        document.getElementById(id).classList.add('active');
+        document.body.classList.add('nav-open');
+    }
+    function closeInfoPopup(id) {
+        document.getElementById(id).classList.remove('active');
+        if (!document.querySelector('.info-popup-overlay.active')) {
+            document.body.classList.remove('nav-open');
+        }
+    }
+    document.getElementById('infoBtn').addEventListener('click',     () => openInfoPopup('infoPopup'));
+    document.querySelectorAll('.info-popup-close').forEach(el => {
+        el.addEventListener('click', () => closeInfoPopup(el.dataset.target));
+    });
+    document.querySelectorAll('.info-popup-overlay').forEach(overlay => {
+        overlay.addEventListener('click', e => {
+            if (e.target === overlay) closeInfoPopup(overlay.id);
+        });
+    });
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.info-popup-overlay.active').forEach(el => closeInfoPopup(el.id));
+        }
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+    $(function () {
+        $('a[href^="#"]').click(function () {
+            var speed = 400;
+            var href = $(this).attr("href");
+            var target = $(href == "#" || href == "" ? 'html' : href);
+            var position = target.offset().top;
+            $('body,html').animate({
+                scrollTop: position - 100
+            }, speed, 'swing');
+            return false;
+        });
     });
 </script>
 </body>

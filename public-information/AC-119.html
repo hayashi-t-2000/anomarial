@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>異現実調査報告書 AC-119 — 異現実収容研究所</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Zen+Kaku+Gothic+New:wght@300;400;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0a0a0a; --white: #fff;
+            --gray-100: #e8e6e1; --gray-200: #d0cdc8; --gray-300: #aaa8a3;
+            --gray-500: #6b6966; --gray-700: #0a0a0a;
+            --red: #8b0000; --red-light: #c0392b;
+            --mono: 'Share Tech Mono', 'Courier Prime', monospace;
+            --sans: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        .breadcrumb {
+            color: #6b6966;
+            margin: 8px 0;
+        }
+
+        /* REPORT */
+        .report-doc { background: #fff; border: 2px solid var(--black); max-width: 860px; margin: 0 auto;}
+        .report-title-bar {
+            border-bottom: 2px solid var(--black); padding: 16px 20px;
+            text-align: center; position: relative;
+        }
+        .report-title-bar h1 {
+            font-family: var(--sans); font-size: 20px; font-weight: 700;
+            letter-spacing: 0.1em; color: var(--black);
+        }
+        .report-title-bar .doc-stamp {
+            position: absolute; top: 50%; right: 20px; transform: translateY(-50%);
+            font-family: var(--mono); font-size: 8px; letter-spacing: 2px;
+            color: var(--gray-300); text-align: right; line-height: 1.8;
+        }
+        .report-ac-row { display: flex; border-bottom: 1px solid var(--black); }
+        .report-ac-main {
+            flex: 1; padding: 12px 16px; border-right: 1px solid var(--black);
+            display: flex; align-items: baseline; gap: 12px;
+        }
+        .report-ac-main .ac-num {
+            font-family: var(--mono); font-size: 22px; font-weight: bold;
+            letter-spacing: 2px; color: var(--black);
+        }
+        .report-ac-main .ac-name {
+            font-family: var(--sans); font-size: 16px; font-weight: 700; color: var(--black);
+        }
+        .report-ac-category {
+            width: 100px; flex-shrink: 0; padding: 8px 12px; text-align: center;
+        }
+        .report-ac-category .cat-label {
+            font-family: var(--mono); font-size: 8px; letter-spacing: 2px;
+            color: var(--gray-300); display: block; margin-bottom: 2px;
+        }
+        .report-ac-category .cat-value {
+            font-family: var(--mono); font-size: 20px; font-weight: bold;
+            color: var(--black); letter-spacing: 1px;
+        }
+        .report-meta-row { display: flex; border-bottom: 1px solid var(--black); }
+        .report-meta-cell { flex: 1; border-right: 1px solid var(--black); }
+        .report-meta-cell:last-child { border-right: none; }
+        .report-meta-cell .meta-label {
+            font-family: var(--mono); font-size: 9px; letter-spacing: 2px; color: var(--black);
+            background: var(--gray-100); padding: 5px 12px;
+            border-bottom: 1px solid var(--black); display: block;
+        }
+        .report-meta-cell .meta-value { padding: 8px 12px; font-size: 12px; color: var(--gray-700); line-height: 1.7; }
+        .report-body { border-bottom: 1px solid var(--black); padding: 20px; min-height: 160px; }
+        .report-body .body-label {
+            font-family: var(--mono); font-size: 8px; letter-spacing: 3px;
+            color: var(--gray-300); display: block; margin-bottom: 12px;
+        }
+        .report-body p { font-size: 13px; color: var(--gray-700); line-height: 2; margin-bottom: 12px; }
+        .report-body p:last-child { margin-bottom: 0; }
+        .report-addendum { border-bottom: 1px solid var(--black); padding: 20px; min-height: 120px; background: #fdfcfa; }
+        .report-addendum .body-label {
+            font-family: var(--mono); font-size: 8px; letter-spacing: 3px;
+            color: var(--gray-300); display: block; margin-bottom: 12px;
+        }
+        .report-addendum p { font-size: 13px; color: var(--gray-700); line-height: 2; margin-bottom: 10px; }
+        .report-addendum p:last-child { margin-bottom: 0; }
+
+        /* ATTACHMENT */
+        .report-attachment {}
+        .att-label-bar {
+            font-family: var(--mono); font-size: 9px; letter-spacing: 2px; color: var(--gray-500);
+            background: var(--gray-100); padding: 6px 16px;
+            border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; gap: 8px;
+        }
+        .att-label-bar::before { content: '//'; color: var(--gray-300); }
+        .att-file-list { list-style: none; padding: 0; }
+        .att-file-list li { border-bottom: 1px solid var(--gray-100); }
+        .att-file-list li:last-child { border-bottom: none; }
+        .att-file-btn {
+            width: 100%; background: transparent; border: none; padding: 12px 16px;
+            display: flex; align-items: center; gap: 12px; cursor: pointer;
+            text-align: left; transition: background 0.15s;
+        }
+        .att-file-btn:hover { background: var(--gray-100); }
+        .att-file-btn.active { background: var(--gray-100); }
+        .att-file-btn .file-icon {
+            font-family: var(--mono); font-size: 8px; letter-spacing: 1px;
+            padding: 2px 6px; border: 1px solid var(--gray-200); color: var(--gray-500);
+            white-space: nowrap; min-width: 40px; text-align: center; flex-shrink: 0;
+        }
+        .att-file-btn .file-icon.t-pdf  { border-color: var(--red); color: var(--red); }
+        .att-file-btn .file-icon.t-img  { border-color: #2a4a6b; color: #2a4a6b; }
+        .att-file-btn .file-icon.t-vid  { border-color: #2a5a2a; color: #2a5a2a; }
+        .att-file-btn .file-icon.t-aud  { border-color: #4a3a6b; color: #4a3a6b; }
+        .att-file-btn .file-name { font-family: var(--mono); font-size: 11px; letter-spacing: 1px; color: var(--black); flex: 1; }
+        .att-file-btn .file-meta { font-family: var(--mono); font-size: 9px; color: var(--gray-300); white-space: nowrap; }
+        .att-file-btn .file-chevron { font-family: var(--mono); font-size: 14px; color: var(--gray-300); transition: transform 0.2s; flex-shrink: 0; }
+        .att-file-btn.active .file-chevron { transform: rotate(90deg); }
+        .att-viewer { display: none; border-top: 1px solid var(--gray-200); background: #111; }
+        .att-viewer.show { display: block; }
+        .att-viewer-header {
+            background: #0a0a0a; padding: 8px 16px;
+            display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #222;
+        }
+        .att-viewer-header span { font-family: var(--mono); font-size: 9px; letter-spacing: 2px; color: #555; }
+        .att-viewer-close {
+            font-family: var(--mono); font-size: 9px; letter-spacing: 1px; color: #444;
+            background: transparent; border: 1px solid #333; padding: 3px 10px;
+            cursor: pointer; transition: all 0.15s;
+        }
+        .att-viewer-close:hover { border-color: #666; color: #888; }
+        .viewer-pdf iframe { width: 100%; height: 520px; display: block; border: none; }
+        .viewer-img { padding: 20px; text-align: center; background: #0d0d0d; }
+        .viewer-img img { max-width: 100%; max-height: 500px; object-fit: contain; border: 1px solid #222; }
+        .viewer-vid { padding: 20px; background: #0d0d0d; text-align: center; }
+        .viewer-vid video { max-width: 100%; max-height: 480px; border: 1px solid #222; }
+        .viewer-aud { padding: 32px 20px; background: #0d0d0d; text-align: center; }
+        .viewer-aud .aud-label { font-family: var(--mono); font-size: 9px; letter-spacing: 3px; color: #444; margin-bottom: 16px; display: block; }
+        .viewer-aud audio { width: 100%; max-width: 480px; }
+        .viewer-placeholder { padding: 40px; text-align: center; background: #0d0d0d; }
+        .viewer-placeholder p { font-family: var(--mono); font-size: 9px; letter-spacing: 2px; color: #2a2a2a; line-height: 2.2; }
+        .att-empty { padding: 24px 16px; font-family: var(--mono); font-size: 9px; letter-spacing: 2px; color: var(--gray-200); text-align: center; }
+
+        @media (max-width: 768px) {
+            .report-title-bar .doc-stamp { display: none; }
+            .report-ac-main .ac-num { font-size: 16px; }
+            .report-ac-main .ac-name { font-size: 13px; }
+            .report-meta-row { flex-direction: column; }
+            .report-meta-cell { border-right: none; border-bottom: 1px solid var(--black); }
+            .report-meta-cell:last-child { border-bottom: none; }
+            .site-footer { flex-direction: column; align-items: flex-start; padding: 20px 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+    <span style="display: inline-block">接続先: <b>SITE-Undertica-SECURE-DB-03</b></span>
+    <b>|</b>
+    <span style="display: inline-block">暗号化: <b>AES-256</b></span>
+    <b>|</b>
+    <span style="display: inline-block">セッション: <b>AUTR-1250-KMTH</b></span>
+    <span class="topbar-right" id="clock"></span>
+</div>
+
+<!-- HEADER -->
+<header class="site-header">
+    <a href="../index.html" class="site-logo">
+        <div class="logo-mark"><img src="../img/logo.png" alt="Anomareal Lab"></div>
+        <div class="logo-text">
+            <span class="logo-main">Anomarial Lab</span>
+            <span class="logo-sub">ANOMAREAL CONTAINMENT INSTITUTE — KURUSU</span>
+        </div>
+    </a>
+    <div class="header-user">
+        <span class="user-label">▶ AUTHENTICATED USER</span>
+        <span class="user-name">Guest Researcher</span>
+        <span class="user-level">CLEARANCE LEVEL: VISITOR</span>
+    </div>
+</header>
+
+<!-- PC NAV -->
+<nav class="headerNav pc">
+    <ul class="site-nav">
+        <li><a href="../index.html" class="active">Home</a></li>
+        <li><a href="../glossary.html">世界観-用語説明</a></li>
+        <li><a href="../index.html#anomarealDB">一般公開資料</a></li>
+        <li><a href="../credit.html">Credit</a></li>
+    </ul>
+</nav>
+
+<!-- SP NAV -->
+<nav class="headerNav sp">
+    <div class="sp-menu-overlay" id="spMenu">
+        <ul class="site-nav">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../glossary.html">世界観-用語説明</a></li>
+            <li><a href="../index.html#anomarealDB">一般公開資料</a></li>
+            <li><a href="../credit.html">Credit</a></li>
+        </ul>
+    </div>
+</nav>
+<button class="hamburger-btn" id="hamburger" aria-label="メニュー">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+</button>
+
+<div class="wrap">
+    <main>
+        <div class="breadcrumb">
+            <a href="../index.html">HOME</a>
+            <span>/</span>
+            <a href="../index.html#anomarealDB">異現実データベース</a>
+            <span>/</span>
+            <span>AC-119</span>
+        </div>
+
+        <div class="report-doc">
+
+            <div class="report-title-bar">
+                <h1>異現実調査報告書（電子公開版）</h1>
+                <div class="doc-stamp">
+                    DOC-ID: ACI-RPT-119-PUB<br>
+                    ISSUED: ■■■■.■■.■■<br>
+                    CLASSIFICATION: PUBLIC
+                </div>
+            </div>
+
+            <div class="report-ac-row">
+                <div class="report-ac-main">
+                    <span class="ac-num">AC-119</span>
+                    <span class="ac-name">fire extinguisher man (消火器マン)</span>
+                </div>
+                <div class="report-ac-category">
+                    <span class="cat-label">カテゴリ</span>
+                    <span class="cat-value">N/U</span>
+                </div>
+            </div>
+
+            <div class="report-meta-row">
+                <div class="report-meta-cell">
+                    <span class="meta-label">性質</span>
+                    <div class="meta-value">人型  / 対話可能</div>
+                </div>
+                <div class="report-meta-cell">
+                    <span class="meta-label">出自</span>
+                    <div class="meta-value">イギリス</div>
+                </div>
+                <div class="report-meta-cell">
+                    <span class="meta-label">異現実性</span>
+                    <div class="meta-value">英雄的消火器</div>
+                </div>
+            </div>
+
+            <div class="report-body">
+                <span class="body-label">REPORT BODY — 調査内容</span>
+                <p>消火器マン「火のない所に煙は立たない！火のある所に俺が立つ！消火器マン！参上！」<br>
+                    消火器マンは現れるときに必ず名乗る正々堂々とした消火器界の英雄！かっこいいぞ！<br>
+                    消火器マンの頭はさいこうにクールだ！今日も消火活動にいそしんで人類をまもるぞ！<br>
+                    消火器マンは1999年7月災厄の火災の際にみんなをたすけたヒーローだ！<br>
+                    消火器マンはとっても使命感がつよいんだ！みんなの笑顔のために今日も消化するぞ！<br>
+                    消火器マンは感情を殺してでも絶対にまけないこころざしをもっているぞ！<br>
+                    消火器マンは自分の使命にほこりをもっているぞ！<br>
+                    消火器マンは消火器の英雄でなくてはならない！今日も火災をさがしてせかいを回っているぞ！<br>
+                    消火器マンは消火器の英雄でなくてはならない！収容されても火災をさがしてまわるぞ！<br>
+                    消火器マンは消火器の英雄でなくてはならない！火災がなければつくりだしてしまえばいいぞ！<br>
+                    消火器マンは消火器の英雄でなくてはならない！やったぞ消火器マン！きょうも火災からみんなを救ったぞ！<br>
+                    消火器マンは消火器の英雄でなくてはならない！消火器マンは世界の火災からみんなをまもらなくてはならない！<br>
+                    消火器マンは消火器の英雄でなくてはならない！消火器マンはつぎの火災をさがしてまわるぞ！<br>
+                    消火器マンは消火器の英雄でなくてはならない！収容されているのでせかいの火災を探してまわることができないぞ！<br>
+                    消火器マンは消火器の英雄でなくてはならない！収容されても目の前に火災がはっせいするぞ！<br>
+                    消火器マンは消火器の英雄でなくてはならない！しゅうようさきのかさいを消火器マンはてっていてきにぼくめつするぞ！<br>
+                    消火器マンは消火器の英雄でなくてはならない！<br>
+                    消火器マンは消火器の英雄でなくてはならない！消火器マンは消火器の英雄でなくてはならない！<br>
+                    消火器マンは消火器の英雄でなくてはならない！消火器マンは消火器の英雄でなくてはならない！消火器マンは消火器の英雄でなくてはならない！<br>
+                    しょうかきまんはしょうかきのえいゆうでなくてはならない！しょうかきまんはしょうかきのえいゆうでなくてはならない！
+                </p>
+            </div>
+
+            <div class="report-addendum">
+                <span class="body-label">ADDENDUM — 追記・補足</span>
+                <p>（現在追記事項なし）</p>
+            </div>
+
+            <div class="report-attachment">
+                <div class="att-label-bar">添付資料・文書</div>
+                <ul class="att-file-list" id="fileList"></ul>
+                <div class="att-viewer" id="attViewer">
+                    <div class="att-viewer-header">
+                        <span id="viewerTitle">—</span>
+                        <button class="att-viewer-close" id="viewerClose">✕ 閉じる</button>
+                    </div>
+                    <div id="viewerBody"></div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ASIDE -->
+    <aside>
+        <div class="aside-block">
+            <h3>Facility Status</h3>
+            <div class="aside-stat">
+                <span class="label">THREAT LEVEL</span>
+                <span class="value red">MODERATE</span>
+            </div>
+            <div class="aside-stat">
+                <span class="label">CONTAINED</span>
+                <span class="value">■■■■■■ entities</span>
+            </div>
+            <div class="aside-stat">
+                <span class="label">ACTIVE STAFF</span>
+                <span class="value">■■■</span>
+            </div>
+            <div class="aside-stat">
+                <span class="label">BRANCH</span>
+                <span class="value">KURUSU-7</span>
+            </div>
+        </div>
+        <div class="aside-block">
+            <h3>Recent Alerts</h3>
+            <div class="aside-alert">
+                <div class="alert-level">NOTICE — LEVEL 1</div>
+                <p>AC-119の定期測定が予定されています。測定員は準備を行ってください。</p>
+            </div>
+            <div class="aside-alert">
+                <div class="alert-level">INFO</div>
+                <p>次回イベント日程は近日公開予定です。Xアカウントをご確認ください。</p>
+            </div>
+        </div>
+        <div class="aside-block">
+            <h3>Access Log</h3>
+            <div class="aside-stat">
+                <span class="label">SESSION</span>
+                <span class="value" id="sessionId">—</span>
+            </div>
+            <div class="aside-stat">
+                <span class="label">CONNECTED</span>
+                <span class="value" id="connTime">—</span>
+            </div>
+        </div>
+    </aside>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+    <span class="footer-copy">© ANOMAREAL CONTAINMENT INSTITUTE — ALL RIGHTS RESERVED</span>
+    <ul>
+        <li><a href="https://vrchat.com/home/group/grp_bea6d950-9024-4336-a939-9d74d0cdbd9a" target="_blank" rel="noopener">VRC Group</a></li>
+        <li><a href="https://x.com/anomareal_lab" target="_blank" rel="noopener">X Account</a></li>
+    </ul>
+</footer>
+
+<script>
+    // Clock
+    function updateClock() {
+        const now = new Date();
+        const p = n => String(n).padStart(2,'0');
+        document.getElementById('clock').textContent =
+            `${now.getFullYear()}-${p(now.getMonth()+1)}-${p(now.getDate())} ${p(now.getHours())}:${p(now.getMinutes())}:${p(now.getSeconds())}`;
+    }
+    setInterval(updateClock, 1000); updateClock();
+
+    // Hamburger
+    const hambtn = document.getElementById('hamburger');
+    const spmenu = document.getElementById('spMenu');
+    hambtn.addEventListener('click', () => {
+        const open = hambtn.classList.toggle('is-open');
+        spmenu.classList.toggle('is-open', open);
+        document.body.classList.toggle('nav-open', open);
+    });
+
+    // =============================================
+    // 添付ファイル設定
+    // type: 'pdf' | 'img' | 'vid' | 'aud'
+    // src : ファイルへのパス（例: 'files/report.pdf'）
+    // =============================================
+    const attachments = [
+        /* {
+            name: 'AC-009_現場写真_01.jpg',
+            type: 'img',
+            label: 'JPG',
+            meta: '撮影: ■■■■',
+            src: ''  // ← ここにパスを入力
+        },
+        {
+            name: 'AC-009_測定記録.pdf',
+            type: 'pdf',
+            label: 'PDF',
+            meta: '2024.03.■■',
+            src: ''  // ← ここにパスを入力
+        },
+        {
+            name: 'AC-009_観察映像.mp4',
+            type: 'vid',
+            label: 'MP4',
+            meta: '00:02:34',
+            src: ''  // ← ここにパスを入力
+        },
+        {
+            name: 'AC-009_音声記録.mp3',
+            type: 'aud',
+            label: 'MP3',
+            meta: '00:01:12',
+            src: ''  // ← ここにパスを入力
+        }, */
+    ];
+
+    const fileList    = document.getElementById('fileList');
+    const attViewer   = document.getElementById('attViewer');
+    const viewerBody  = document.getElementById('viewerBody');
+    const viewerTitle = document.getElementById('viewerTitle');
+    const viewerClose = document.getElementById('viewerClose');
+    let activeBtn = null;
+
+    function buildFileList() {
+        if (!attachments.length) {
+            fileList.innerHTML = '<li class="att-empty">// 添付資料なし — NO ATTACHMENTS</li>';
+            return;
+        }
+        attachments.forEach((file, idx) => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <button class="att-file-btn" data-idx="${idx}">
+                    <span class="file-icon t-${file.type}">${file.label}</span>
+                    <span class="file-name">${file.name}</span>
+                    <span class="file-meta">${file.meta}</span>
+                    <span class="file-chevron">›</span>
+                </button>`;
+            fileList.appendChild(li);
+        });
+        fileList.querySelectorAll('.att-file-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const file = attachments[parseInt(btn.dataset.idx)];
+                if (activeBtn === btn && attViewer.classList.contains('show')) {
+                    closeViewer(); return;
+                }
+                if (activeBtn) activeBtn.classList.remove('active');
+                btn.classList.add('active');
+                activeBtn = btn;
+                openViewer(file);
+            });
+        });
+    }
+
+    function openViewer(file) {
+        viewerTitle.textContent = file.name;
+
+        // パス未設定の場合はデモ表示
+        if (!file.src) {
+            viewerBody.innerHTML = `<div class="viewer-placeholder">
+                <p>// FILE NOT LINKED<br><br></p></div>`;
+            attViewer.classList.add('show');
+            attViewer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            return;
+        }
+
+        const viewers = {
+            pdf: () => `<div class="viewer-pdf"><iframe src="${file.src}" title="${file.name}"></iframe></div>`,
+            img: () => `<div class="viewer-img"><img src="${file.src}" alt="${file.name}"></div>`,
+            vid: () => `<div class="viewer-vid"><video controls><source src="${file.src}">動画を再生できません。</video></div>`,
+            aud: () => `<div class="viewer-aud"><span class="aud-label">// AUDIO — ${file.name}</span><audio controls><source src="${file.src}">音声を再生できません。</audio></div>`,
+        };
+        viewerBody.innerHTML = (viewers[file.type] || viewers.pdf)();
+        attViewer.classList.add('show');
+        attViewer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function closeViewer() {
+        attViewer.classList.remove('show');
+        viewerBody.innerHTML = '';
+        if (activeBtn) { activeBtn.classList.remove('active'); activeBtn = null; }
+    }
+
+    viewerClose.addEventListener('click', closeViewer);
+    buildFileList();
+</script>
+</body>
+</html>

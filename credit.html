@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit — 異現実収容研究所</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Zen+Kaku+Gothic+New:wght@300;400;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0a0a0a; --white: #fff;
+            --gray-100: #e8e6e1; --gray-200: #d0cdc8; --gray-300: #aaa8a3;
+            --gray-500: #6b6966; --gray-700: #3a3835;
+            --red: #8b0000; --red-light: #c0392b;
+            --mono: 'Share Tech Mono', 'Courier Prime', monospace;
+            --sans: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        /* SECTION HEADER */
+        .section-header {
+            display: flex; align-items: baseline; gap: 16px;
+            margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid var(--black);
+            flex-wrap: wrap;
+        }
+        .section-header h2 {
+            font-family: var(--mono); font-size: 11px; letter-spacing: 4px; color: var(--black);
+        }
+        .section-header .section-id {
+            font-family: var(--mono); font-size: 9px; color: var(--gray-300); letter-spacing: 2px;
+        }
+        .section-header .staff-count {
+            margin-left: auto; font-family: var(--mono); font-size: 9px;
+            letter-spacing: 2px; color: var(--gray-300);
+        }
+
+        /* STAFF SECTION */
+        .staff-section { margin-bottom: 48px; }
+
+        /* STAFF TABLE */
+        .staff-table-wrap {
+            width: 100%; overflow-x: auto; display: block;
+            border: 1px solid var(--gray-200); -webkit-overflow-scrolling: touch;
+        }
+        .staff-table {
+            width: 100%; min-width: 520px; border-collapse: collapse;
+            font-size: 12px; background: #fff;
+        }
+        .staff-table thead tr { background: var(--black); }
+        .staff-table th {
+            font-family: var(--mono); font-size: 8px; letter-spacing: 3px;
+            text-transform: uppercase; color: #666; text-align: left;
+            padding: 10px 14px; white-space: nowrap; border-right: 1px solid #1a1a1a;
+        }
+        .staff-table th:last-child { border-right: none; }
+        .staff-table tbody tr {
+            border-bottom: 1px solid var(--gray-100); transition: background 0.1s;
+        }
+        .staff-table tbody tr:last-child { border-bottom: none; }
+        .staff-table tbody tr:hover { background: var(--gray-100); }
+        .staff-table td {
+            font-weight: 700;
+            padding: 12px 14px; vertical-align: middle;
+            border-right: 1px solid var(--gray-100);
+            width: 33.3%;
+        }
+        .staff-table td:last-child { border-right: none; }
+
+        /* Cell types */
+        .td-name {
+            font-size: 13px; color: var(--black); white-space: nowrap;
+        }
+        .td-dept {
+            font-size: 11px; color: var(--black);
+        }
+        .td-note {
+            font-size: 11px; color: var(--black); line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+    <span style="display: inline-block">接続先: <b>SITE-Undertica-SECURE-DB-03</b></span>
+    <b>|</b>
+    <span style="display: inline-block">暗号化: <b>AES-256</b></span>
+    <b>|</b>
+    <span style="display: inline-block">セッション: <b>AUTR-1250-KMTH</b></span>
+    <span class="topbar-right" id="clock"></span>
+</div>
+
+<!-- HEADER -->
+<header class="site-header">
+    <a href="index.html" class="site-logo">
+        <div class="logo-mark"><img src="img/logo.png" alt="Anomareal Lab"></div>
+        <div class="logo-text">
+            <span class="logo-main">Anomarial Lab</span>
+            <span class="logo-sub">ANOMAREAL CONTAINMENT INSTITUTE — KURUSU</span>
+        </div>
+    </a>
+    <div class="header-user">
+        <span class="user-label">▶ AUTHENTICATED USER</span>
+        <span class="user-name">Guest Researcher</span>
+        <span class="user-level">CLEARANCE LEVEL: VISITOR</span>
+    </div>
+</header>
+
+<!-- PC NAV -->
+<nav class="headerNav pc">
+    <ul class="site-nav">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="glossary.html">世界観-用語説明</a></li>
+        <li><a href="index.html#anomarealDB">一般公開資料</a></li>
+        <li><a href="credit.html">Credit</a></li>
+    </ul>
+</nav>
+
+<!-- SP NAV -->
+<nav class="headerNav sp">
+    <div class="sp-menu-overlay" id="spMenu">
+        <ul class="site-nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="glossary.html">世界観-用語説明</a></li>
+            <li><a href="index.html#anomarealDB">一般公開資料</a></li>
+            <li><a href="credit.html">Credit</a></li>
+        </ul>
+    </div>
+</nav>
+<button class="hamburger-btn" id="hamburger" aria-label="メニュー">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+</button>
+
+<div class="wrap">
+    <main>
+
+        <div class="page-title-block">
+            <div class="left">
+                <div class="doc-id">DOC-REF: ACI-STAFF-PUBLIC-V1.0</div>
+                <h1>関係者一覧</h1>
+            </div>
+            <div class="right">
+                CLASSIFICATION: PUBLIC<br>
+                BRANCH: KURUSU-7<br>
+                LAST UPDATED: ■■■■.■■.■■
+            </div>
+        </div>
+
+        <!-- 運営スタッフ -->
+        <section class="staff-section" id="sec-management">
+            <div class="section-header">
+                <h2>運営スタッフ</h2>
+                <span class="section-id">SEC-01 / MANAGEMENT</span>
+                <span class="staff-count" id="count-management"></span>
+            </div>
+            <div class="staff-table-wrap">
+                <table class="staff-table" data-section="management">
+                    <thead>
+                        <tr>
+                            <th>担当</th>
+                            <th>名前</th>
+                            <th>Xアカウント</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="td-dept">主催/ミタライ博士役</td>
+                            <td class="td-name">Lan_Laundry</td>
+                            <td class="td-note"><a href="https://x.com/LanLanLaundry" target="_blank" rel="noopener">@LanLanLaundry</a></td>
+                        </tr>
+                        <tr>
+                            <td class="td-dept">スタッフ/ハツネ助手役</td>
+                            <td class="td-name">Aizawa0u0</td>
+                            <td class="td-note"><a href="https://x.com/SHIRO_0u0_" target="_blank" rel="noopener">@SHIRO_0u0_</a></td>
+                        </tr>
+                        <tr>
+                            <td class="td-dept">スタッフ/佐藤さとー（佐藤あかり）役</td>
+                            <td class="td-name">いちや_ICHIYA</td>
+                            <td class="td-note"><a href="https://x.com/Atelier_atomori" target="_blank" rel="noopener">@Atelier_atomori</a></td>
+                        </tr>
+                        <tr>
+                            <td class="td-dept">スタッフ/雪城 叶芽役</td>
+                            <td class="td-name">うぬ 3</td>
+                            <td class="td-note"><a href="https://x.com/VRC_sirasu" target="_blank" rel="noopener">@VRC_sirasu</a></td>
+                        </tr>
+                        <tr>
+                            <td class="td-dept">スタッフ/ウォッシャー博士役(映像出演)</td>
+                            <td class="td-name">DANAMO_come</td>
+                            <td class="td-note"><a href="https://x.com/DANAMO_come" target="_blank" rel="noopener">@DANAMO_come</a></td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="td-dept">ネコムラ助手役(映像出演)</td>
+                            <td class="td-name">ニャン太</td>
+                            <td class="td-note"><a href="https://x.com/nyantavrc" target="_blank" rel="noopener">@nyantavrc</a></td>
+                        </tr>
+                        <tr>
+                            <td class="td-dept">ナレーション(映像出演)</td>
+                            <td class="td-name">さかな_sakana</td>
+                            <td class="td-note"><a href="https://x.com/fish01010_VR" target="_blank" rel="noopener">@fish01010_VR</a></td>
+                        </tr>
+                        <tr>
+                            <td class="td-dept">ワールド制作</td>
+                            <td class="td-name">まめつぶ</td>
+                            <td class="td-note"><a href="https://x.com/mametsubusi" target="_blank" rel="noopener">@mametsubusi</a></td>
+                        </tr>
+                        <tr>
+                            <td class="td-dept">ワールド制作補佐</td>
+                            <td class="td-name">ゆあたん</td>
+                            <td class="td-note"><a href="https://x.com/yua_vrc" target="_blank" rel="noopener">@yua_vrc</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- サポート -->
+        <section class="staff-section" id="sec-cast">
+            <div class="section-header">
+                <h2>Cast</h2>
+                <span class="section-id">SEC-02 / CAST</span>
+                <span class="staff-count" id="count-cast"></span>
+            </div>
+            <div class="staff-table-wrap">
+                <table class="staff-table" data-section="cast">
+                    <thead>
+                        <tr>
+                            <th>担当</th>
+                            <th>名前</th>
+                            <th>Xアカウント</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="td-dept">AC-005役</td>
+                            <td class="td-name">HONI_3</td>
+                            <td class="td-note"><a href="https://x.com/Hohohohoni3" target="_blank" rel="noopener">@Hohohohoni3</a></td>
+                        </tr>
+                        <tr>
+                            <td class="td-dept">AC-038役</td>
+                            <td class="td-name">CieL_na</td>
+                            <td class="td-note"><a href="https://x.com/ciel_nameless" target="_blank" rel="noopener">@ciel_nameless</a></td>
+                        </tr>
+                        <tr>
+                            <td class="td-dept">AC-053役</td>
+                            <td class="td-name">今川あきら</td>
+                            <td class="td-note"><a href="https://x.com/akira_imagawa_2" target="_blank" rel="noopener">@akira_imagawa_2</a></td>
+                        </tr>
+                        <tr>
+                            <td class="td-dept">AC-067役</td>
+                            <td class="td-name">pibby_gg</td>
+                            <td class="td-note"><a href="https://x.com/pibby_gg" target="_blank" rel="noopener">@pibby_gg</a></td>
+                        </tr>
+                        <tr>
+                            <td class="td-dept">AC-086役</td>
+                            <td class="td-name">人類生肉</td>
+                            <td class="td-note"><a href="https://x.com/jinrui_namaniku" target="_blank" rel="noopener">@jinrui_namaniku</a></td>
+                        </tr>
+                        <tr>
+                            <td class="td-dept">AC-100役</td>
+                            <td class="td-name">Lianemapoupee</td>
+                            <td class="td-note"><a href="https://x.com/Liane_ma_poupee" target="_blank" rel="noopener">@Liane_ma_poupee</a></td>
+                        </tr>
+                        <tr>
+                            <td class="td-dept">AC-110役</td>
+                            <td class="td-name">ガスブロ</td>
+                            <td class="td-note"><a href="https://x.com/gasuburotr" target="_blank" rel="noopener">@GASUBUROTR</a></td>
+                        </tr>
+                        <tr>
+                            <td class="td-dept">AC-154役</td>
+                            <td class="td-name">NE7221</td>
+                            <td class="td-note"><a href="https://x.com/VRC_NE" target="_blank" rel="noopener">@VRC_NE</a></td>
+                        </tr>
+                        <tr>
+                            <td class="td-dept">AC-181役</td>
+                            <td class="td-name">もめ mome</td>
+                            <td class="td-note"><a href="https://x.com/momendofu_vrc" target="_blank" rel="noopener">@momendofu_vrc</a></td>
+                        </tr>
+                        <tr>
+                            <td class="td-dept">AC-244役</td>
+                            <td class="td-name">Towa_cef8</td>
+                            <td class="td-note"><a href="https://x.com/Towa_cef8" target="_blank" rel="noopener">@Towa_cef8</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ASIDE -->
+    <aside>
+        <div class="aside-block">
+            <h3>Facility Status</h3>
+            <div class="aside-stat">
+                <span class="label">THREAT LEVEL</span>
+                <span class="value red">MODERATE</span>
+            </div>
+            <div class="aside-stat">
+                <span class="label">CONTAINED</span>
+                <span class="value">■■■■■■ entities</span>
+            </div>
+            <div class="aside-stat">
+                <span class="label">ACTIVE STAFF</span>
+                <span class="value">■■■</span>
+            </div>
+            <div class="aside-stat">
+                <span class="label">BRANCH</span>
+                <span class="value">KURUSU-7</span>
+            </div>
+        </div>
+        <div class="aside-block">
+            <h3>Recent Alerts</h3>
+            <div class="aside-alert">
+                <div class="alert-level">NOTICE — LEVEL 1</div>
+                <p>AC-119の定期測定が予定されています。測定員は準備を行ってください。</p>
+            </div>
+            <div class="aside-alert">
+                <div class="alert-level">INFO</div>
+                <p>次回イベント日程は近日公開予定です。Xアカウントをご確認ください。</p>
+            </div>
+        </div>
+        <div class="aside-block">
+            <h3>Access Log</h3>
+            <div class="aside-stat">
+                <span class="label">SESSION</span>
+                <span class="value" id="sessionId">—</span>
+            </div>
+            <div class="aside-stat">
+                <span class="label">CONNECTED</span>
+                <span class="value" id="connTime">—</span>
+            </div>
+        </div>
+    </aside>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+    <span class="footer-copy">© ANOMAREAL CONTAINMENT INSTITUTE — ALL RIGHTS RESERVED</span>
+    <ul>
+        <li><a href="https://vrchat.com/home/group/grp_bea6d950-9024-4336-a939-9d74d0cdbd9a" target="_blank" rel="noopener">VRC Group</a></li>
+        <li><a href="https://x.com/anomareal_lab" target="_blank" rel="noopener">X Account</a></li>
+    </ul>
+</footer>
+
+<script>
+    // Clock
+    function updateClock() {
+        const now = new Date();
+        const p = n => String(n).padStart(2,'0');
+        document.getElementById('clock').textContent =
+            `${now.getFullYear()}-${p(now.getMonth()+1)}-${p(now.getDate())} ${p(now.getHours())}:${p(now.getMinutes())}:${p(now.getSeconds())}`;
+    }
+    setInterval(updateClock, 1000); updateClock();
+
+    // Hamburger
+    const btn = document.getElementById('hamburger');
+    const menu = document.getElementById('spMenu');
+    btn.addEventListener('click', () => {
+        const open = btn.classList.toggle('is-open');
+        menu.classList.toggle('is-open', open);
+        document.body.classList.toggle('nav-open', open);
+    });
+
+    // Session info
+    const sid = Math.random().toString(36).slice(2, 10).toUpperCase();
+    document.getElementById('sessionId').textContent = sid;
+    const now = new Date();
+    document.getElementById('connTime').textContent =
+        `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+ 
+
+    // Aside scroll highlight
+    const sections = document.querySelectorAll('.glossary-section');
+    const navLinks = document.querySelectorAll('.aside-index a');
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(link => {
+                    link.classList.toggle('active-section', link.getAttribute('href') === '#' + entry.target.id);
+                });
+            }
+        });
+    }, { threshold: 0.3 });
+    sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
