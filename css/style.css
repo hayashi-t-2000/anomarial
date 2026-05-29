@@ -47,7 +47,6 @@ a {
 /* ===== HEADER ===== */
 .site-header {
     background: #fff;
-    border-bottom: 3px solid #0a0a0a;
     padding: 16px 32px;
     display: flex;
     align-items: center;
@@ -375,6 +374,9 @@ body.nav-open {
         }
     .header-user { 
         display: none; 
+    }
+    .topbar .topbar-right {
+        display: none;
     }
     .headerNav.pc { 
         display: none; 

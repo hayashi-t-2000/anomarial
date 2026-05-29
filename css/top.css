@@ -323,6 +323,9 @@
         gap: 24px;
         padding: 20px 16px;
     }
+    .explanationWrap .movie {
+        margin: 0 auto;
+    }
     .movie iframe { 
         width: 100%; height: auto; aspect-ratio: 16/9; 
     }
